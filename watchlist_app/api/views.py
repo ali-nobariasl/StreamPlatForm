@@ -1,13 +1,15 @@
 from rest_framework.response import Response
 from rest_framework import status , viewsets
 from rest_framework.exceptions import ValidationError
-from rest_framework.decorators import api_view
 from rest_framework.views import APIView
-from watchlist_app.models import WatchList, StreamPlatform , Review
-from django.shortcuts import get_object_or_404
 from rest_framework import generics, mixins
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import api_view
+from django.shortcuts import get_object_or_404
+
 
 from watchlist_app.models import StreamPlatform ,WatchList , Review 
+from watchlist_app.api.permissions import IsAdminOrReadOnly, ReviewUserOrReadOnly
 from watchlist_app.api.serializers import WatchListSerializer,StreamPlatformSerializer,ReviewSerializer
 
 
@@ -215,7 +217,7 @@ class Review_list(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Gener
 
 
 class Review_detailGv(generics.RetrieveUpdateDestroyAPIView):
-    
+    permission_classes = [IsAuthenticated]
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     

@@ -20,3 +20,4 @@ class ReviewUserOrReadOnly(permissions.BasePermission):
             return True
         else: 
             return obj.review_user == request.user
+        
