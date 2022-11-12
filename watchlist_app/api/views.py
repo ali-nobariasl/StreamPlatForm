@@ -87,6 +87,21 @@ def platform_Detail (request, pk):
     if request.method == 'DELETE':
         plat.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class platform_listAv(APIView):
+    def get(self, request):
+        plat = StreamPlatform.objects.all()
+        serialize = StreamPlatformSerializer(plat, many=True)
+        return Response(serialize.data)
+    
+    def post(self,request):
+        serialize = StreamPlatformSerializer(data= request.data)
+        if serialize.is_valid():
+            serialize.save()
+            return Response(serialize.data)
+        else:
+            return Response(serialize.errors)
     
     
 class Movie_listAv(APIView):
