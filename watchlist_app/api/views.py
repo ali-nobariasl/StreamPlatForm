@@ -35,8 +35,19 @@ def movie_detail(request, pk):
     except WatchList.DoesNotExist:
         return Response({'Error':'ther is no movie for this number baby :D '})
         
-    serialize = WatchListSerializer(movie)
-    return Response(serialize.data)
+    if request.method == 'GET':
+        serialize = WatchListSerializer(movie)
+        return Response(serialize.data)
+    if request.method == 'DELETE':
+        movie.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    if request.method == 'PUT':
+        serialize = WatchListSerializer(movie, data=request.data)
+        if serialize.is_valid():
+            serialize.save()
+            return Response(serialize.data)
+        else:
+            return Response(serialize.errors)
 
 
 @api_view(['GET', 'POST'])
