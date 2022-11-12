@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import generics, mixins
 
 from watchlist_app.models import StreamPlatform ,WatchList , Review 
-from watchlist_app.api.serializers import WatchListSerializer,StreamPlatformSerializer
+from watchlist_app.api.serializers import WatchListSerializer,StreamPlatformSerializer,ReviewSerializer
 
 
 
@@ -89,7 +89,7 @@ def platform_Detail (request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class platform_detailAv(APIView):
+class Platform_detailAv(APIView):
     
     def get(self, request,pk):
         try:
@@ -122,7 +122,7 @@ class platform_detailAv(APIView):
             return Response(serialize.errors)
         
 
-class platform_listAv(APIView):
+class Platform_listAv(APIView):
     def get(self, request):
         plat = StreamPlatform.objects.all()
         serialize = StreamPlatformSerializer(plat, many=True)
@@ -185,3 +185,35 @@ class Movie_detailAv(APIView):
             return Response(serialize.data)
         else:
             return Response(serialize.errors)
+        
+
+class Review_detail(mixins.RetrieveModelMixin,mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin, generics.GenericAPIView):
+    
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+    
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
+class Review_list(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+    
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+
+#class PlatfromVS(viewsets.Viewset):
+    
+
