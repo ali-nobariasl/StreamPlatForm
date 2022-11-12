@@ -223,3 +223,20 @@ class Review_listGv(generics.ListAPIView):
     
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+
+
+
+class Platform_Viewset(viewsets.ViewSet):
+    
+    def list(self, request):
+        query_set = StreamPlatform.objects.all()
+        serializer = StreamPlatformSerializer(query_set,many=True)
+        return Response(serializer.data)
+    
+    def retrieve(self, request, pk=None):
+        query_set = StreamPlatform.objects.all()
+        watchlist = get_object_or_404(query_set, pk=pk)
+        serializer = StreamPlatformSerializer(watchlist)
+        return Response(serializer.data)
+    
+        
