@@ -7,6 +7,6 @@ urlpatterns = [
     path('list/<int:pk>/', movie_detail, name = 'movie-detail'),
     
     path('platlist/', platform_list, name = 'platform-list'),
-    path('platlist/<int:pk>', platform_Detail, name = 'platform-Detail'),
+    path('platlist/<int:pk>/', platform_Detail, name = 'platform-Detail'),
     
 ]

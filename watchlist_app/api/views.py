@@ -11,13 +11,24 @@ from watchlist_app.models import StreamPlatform ,WatchList , Review
 from watchlist_app.api.serializers import WatchListSerializer,StreamPlatformSerializer
 
 
-@api_view(['GET'])
-def movie_list(request):
-    movies = WatchList.objects.all() 
-    serialize = WatchListSerializer(movies, many= True)
-    return Response(serialize.data)
 
-@api_view(['GET'])
+@api_view(['GET', 'POST'])
+def movie_list(request):
+    if request.method == 'GET':
+        movies = WatchList.objects.all() 
+        serialize = WatchListSerializer(movies, many= True)
+        return Response(serialize.data)
+    
+    if request.method == 'POST':
+        serialize = WatchListSerializer(data= request.data)
+        if serialize.is_valid():
+            serialize.save()
+            return Response(serialize.data)
+        else:
+            return Response(serialize.errors)
+        
+
+@api_view(['GET', 'PUT', 'DELETE'])
 def movie_detail(request, pk):
     try :
         movie = WatchList.objects.get(pk = pk)
