@@ -89,6 +89,39 @@ def platform_Detail (request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class platform_detailAv(APIView):
+    
+    def get(self, request,pk):
+        try:
+            plat = StreamPlatform.objects.get(pk =pk)
+        except StreamPlatform.DoesNotExist:
+            return Response({'Error':'platform not found'})
+        
+        serialize = StreamPlatformSerializer(plat)
+        return Response(serialize.data)
+    
+    def delete(self, request,pk):
+        try:
+            plat = StreamPlatform.objects.get(pk =pk)
+        except StreamPlatform.DoesNotExist:
+            return Response({'Error':'platform not found'})
+        plat.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def put(self,request,pk):
+        try:
+            plat = StreamPlatform.objects.get(pk =pk)
+        except StreamPlatform.DoesNotExist:
+            return Response({'Error':'platform not found'})
+        
+        serialize = StreamPlatformSerializer(plat, data = request.data)
+        if serialize.is_valid():
+            serialize.save()
+            return Response(serialize.data)
+        else:
+            return Response(serialize.errors)
+        
+
 class platform_listAv(APIView):
     def get(self, request):
         plat = StreamPlatform.objects.all()
