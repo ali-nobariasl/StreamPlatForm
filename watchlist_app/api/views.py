@@ -89,7 +89,22 @@ def platform_Detail (request, pk):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
     
-
+class Movie_listAv(APIView):
+    
+    def post(self,request):
+        serialize = WatchListSerializer(data = request.data)
+        if serialize.is_valid():
+            serialize.save()
+            return Response(serialize.data)
+        else:
+            return Response(serialize.errors)
+        
+    def get(self,request):
+        movie = WatchList.objects.all()
+        serialize = WatchListSerializer(movie, many= True)
+        return Response(serialize.data)
+    
+    
 class Movie_detailAv(APIView):
     
     def get(self,request,pk ):
@@ -110,7 +125,7 @@ class Movie_detailAv(APIView):
         movie.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
     
-    def put(self, pk, request):
+    def put(self,request,pk):
         try:
             movie = WatchList.objects.get(pk =pk)
         except WatchList.DoesNotExist:
@@ -121,4 +136,4 @@ class Movie_detailAv(APIView):
             serialize.save()
             return Response(serialize.data)
         else:
-            return Response(serialize.error)
+            return Response(serialize.errors)
