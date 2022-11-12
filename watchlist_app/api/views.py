@@ -87,3 +87,38 @@ def platform_Detail (request, pk):
     if request.method == 'DELETE':
         plat.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    
+
+class Movie_detailAv(APIView):
+    
+    def get(self,request,pk ):
+        try:
+            movie = WatchList.objects.get(pk =pk)
+        except WatchList.DoesNotExist:
+            return Response({'Error':'Movie Not found :D '})
+        
+        serialize = WatchListSerializer(movie)
+        return Response(serialize.data)
+    
+    def delete(self,request, pk):
+        try:
+            movie = WatchList.objects.get(pk =pk)
+        except WatchList.DoesNotExist:
+            return Response({'Error':'Movie Not found :D '})
+        
+        movie.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    def put(self, pk, request):
+        try:
+            movie = WatchList.objects.get(pk =pk)
+        except WatchList.DoesNotExist:
+            return Response({'Error':'Movie Not found :D '})
+        
+        serialize = WatchListSerializer(movie, data= request.data)
+        if serialize.is_valid():
+            serialize.save()
+            return Response(serialize.data)
+        else:
+            return Response(serialize.error)
