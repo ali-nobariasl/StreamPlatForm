@@ -214,6 +214,12 @@ class Review_list(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Gener
         return self.create(request, *args, **kwargs)
 
 
-#class PlatfromVS(viewsets.Viewset):
+class Review_detailGv(generics.RetrieveUpdateDestroyAPIView):
     
-
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    
+class Review_listGv(generics.ListAPIView):
+    
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
