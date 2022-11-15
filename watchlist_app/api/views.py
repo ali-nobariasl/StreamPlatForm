@@ -125,6 +125,7 @@ class Platform_detailAv(APIView):
         
 
 class Platform_listAv(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         plat = StreamPlatform.objects.all()
         serialize = StreamPlatformSerializer(plat, many=True)
