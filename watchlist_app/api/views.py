@@ -242,3 +242,28 @@ class Platform_Viewset(viewsets.ViewSet):
         return Response(serializer.data)
     
         
+        
+class ReviewCreate(generics.CreateAPIView):
+    serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return Review.objects.all()
+    
+    def perform_create(self, serializer):
+        pk = self.kwargs.get('pk')
+        watchlist = WatchList.objects.get(pk=pk)
+        
+        review_user = self.request.user
+        obj = Review.objects.filter(WatchList=watchlist, review_user =review_user)
+        if obj.exists():
+            raise ValidationError("you have  already reviewed this one :D ")
+        
+        if watchlist.number_rating == 0:
+            watchlist.Avr_rate == serializer.validated_data['rating']
+        else:
+            watchlist.Avr_rate == (watchlist.Avr_rate + serializer.validated_data['rating']) /2 
+            
+        watchlist.number_rating += 1
+        watchlist.save()
+        serializer.save(WatchList= watchlist, review_user=review_user)
