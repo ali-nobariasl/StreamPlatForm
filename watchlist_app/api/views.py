@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404
 
 
 from watchlist_app.models import StreamPlatform ,WatchList , Review 
-from watchlist_app.api.permissions import IsAdminOrReadOnly, ReviewUserOrReadOnly
+from watchlist_app.api.permissions import IsAdminOrReadOnly, IsReviewUserOrReadOnly
 from watchlist_app.api.serializers import WatchListSerializer,StreamPlatformSerializer,ReviewSerializer
 
 
@@ -92,7 +92,7 @@ def platform_Detail (request, pk):
 
 
 class Platform_detailAv(APIView):
-    
+    permission_classes = [IsAdminOrReadOnly]
     def get(self, request,pk):
         try:
             plat = StreamPlatform.objects.get(pk =pk)
@@ -125,7 +125,9 @@ class Platform_detailAv(APIView):
         
 
 class Platform_listAv(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAdminOrReadOnly]
+    #permission_classes = [IsAuthenticated]
+    
     def get(self, request):
         plat = StreamPlatform.objects.all()
         serialize = StreamPlatformSerializer(plat, many=True)
@@ -141,7 +143,7 @@ class Platform_listAv(APIView):
     
     
 class Movie_listAv(APIView):
-    
+    permission_classes = [IsAdminOrReadOnly]
     def post(self,request):
         serialize = WatchListSerializer(data = request.data)
         if serialize.is_valid():
@@ -157,6 +159,7 @@ class Movie_listAv(APIView):
     
     
 class Movie_detailAv(APIView):
+    permission_classes = [IsAdminOrReadOnly]
     
     def get(self,request,pk ):
         try:
@@ -218,7 +221,7 @@ class Review_list(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Gener
 
 
 class Review_detailGv(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsReviewUserOrReadOnly]
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     
@@ -230,6 +233,7 @@ class Review_listGv(generics.ListAPIView):
 
 
 class Platform_Viewset(viewsets.ViewSet):
+    permission_classes = [IsAdminOrReadOnly]
     
     def list(self, request):
         query_set = StreamPlatform.objects.all()
