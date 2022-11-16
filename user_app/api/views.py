@@ -10,10 +10,22 @@ from user_app import models
 
 @api_view(['POST',])
 def registerstion_view(request):
-    
+
     if request.method == 'POST':
         serializer = RegisterationSerializer(data=request.data)
+        data = {}
+        
         if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
+            account = serializer.save()
+            
+            data['response'] = "Registeration successful"
+            data['username'] = account.username   
+            data['email'] = account.email
+            token = Token.objects.get(user=account).key
+            data['token'] = token
+            
+        else:
+            data = serializer.errors
+            
+        return Response(data)
         
