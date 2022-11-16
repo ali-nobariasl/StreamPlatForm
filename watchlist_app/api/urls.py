@@ -16,17 +16,15 @@ router.register( 'stream', Platform_Viewset, basename='Platform-Viewset')
 
 urlpatterns = [
     path('list/', Movie_listAv.as_view(), name = 'movie-list'),
-    path('<int:pk>', Movie_detailAv.as_view(), name = 'movie-detail'),
+    path('<int:pk>/', Movie_detailAv.as_view(), name = 'movie-detail'),
     
     path('stream/', Platform_listAv.as_view(), name = 'platform-list'),
     path('stream/<int:pk>/', Platform_detailAv.as_view(), name = 'platform-Detail'),
     
-    path('rewlist/<int:pk>/', Review_detailGv.as_view(), name = 'Review_detail'),
-    path('rewlist/', Review_listGv.as_view(), name = 'Review_detail'),
-    path('stream/<int:pk>/review-create', ReviewCreate.as_view(), name = 'Review_detail'),
+    path('review/<int:pk>/', Review_detailGv.as_view(), name = 'Review_detail'),
+    path('<int:pk>/reviews/', Review_listGv.as_view(), name = 'Review_detail'),
+    path('<int:pk>/review-create', ReviewCreate.as_view(), name = 'Review_detail'),
     
-    
-    
-    path('', include(router.urls)), 
+    #path('', include(router.urls)), 
     
 ]
