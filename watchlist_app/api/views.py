@@ -226,10 +226,14 @@ class Review_detailGv(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ReviewSerializer
     
 class Review_listGv(generics.ListAPIView):
+    pagination_class = [IsAuthenticated]
     
-    queryset = Review.objects.all()
+    #queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-
+    
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return Review.objects.filter(WatchList = pk)
 
 
 class Platform_Viewset(viewsets.ViewSet):
