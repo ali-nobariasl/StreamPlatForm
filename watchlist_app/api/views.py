@@ -286,3 +286,11 @@ class ReviewCreate(generics.CreateAPIView):
         watchlist.number_rating += 1
         watchlist.save()
         serializer.save(WatchList= watchlist, review_user=review_user)
+        
+
+class UserReview(generics.ListAPIView):
+    serializer_class = ReviewSerializer
+    
+    def get_queryset(self):
+        username = self.kwargs['username']
+        return Review.objects.filter(review_user__username=username)

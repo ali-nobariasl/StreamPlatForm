@@ -6,7 +6,8 @@ from watchlist_app.api.views import (movie_list , movie_detail, platform_list , 
                                      Review_detail , Review_list ,
                                      Review_detailGv, Review_listGv,
                                      Platform_Viewset,
-                                     ReviewCreate
+                                     ReviewCreate,
+                                     UserReview
                                        )
 
 
@@ -25,6 +26,8 @@ urlpatterns = [
     path('<int:pk>/reviews/', Review_listGv.as_view(), name = 'Review_detail'),
     path('<int:pk>/review-create', ReviewCreate.as_view(), name = 'Review_detail'),
     
+    path('reviews/<str:username>/', UserReview.as_view(), name = 'user-review-detail'),
+
     path('', include(router.urls)), 
     
 ]
