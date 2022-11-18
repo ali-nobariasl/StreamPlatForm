@@ -13,7 +13,7 @@ from watchlist_app.models import StreamPlatform ,WatchList , Review
 from watchlist_app.api.permissions import IsAdminOrReadOnly, IsReviewUserOrReadOnly
 from watchlist_app.api.serializers import WatchListSerializer,StreamPlatformSerializer,ReviewSerializer
 from watchlist_app.api.throttling import ReviewCreateThrottle ,ReviewListThrottle
-
+from watchlist_app.api.pagination import WatchListPagination
 
 @api_view(['GET', 'POST'])
 def movie_list(request):
