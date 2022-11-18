@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'user_app',
     'watchlist_app',
+    'django_filter',
 ]
 
 MIDDLEWARE = [
