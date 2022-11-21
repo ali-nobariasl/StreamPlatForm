@@ -31,6 +31,12 @@ def movie_list(request):
             return Response(serialize.errors)
         
 
+class MovieListALI(generics.ListCreateAPIView):
+    queryset = WatchList.objects.all()
+    serializer_class = WatchListSerializer
+
+        
+
 @api_view(['GET', 'PUT', 'DELETE'])
 def movie_detail(request, pk):
     try :

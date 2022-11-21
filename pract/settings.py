@@ -132,23 +132,23 @@ REST_FRAMEWORK = {
 #   'DEFAULT_PERMISSION_CLASSES':[
 #       'rest_framework.permissions.IsAuthenticated',
 #    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-       'rest_framework.authentication.TokenAuthentication',
+#    'DEFAULT_AUTHENTICATION_CLASSES': [
+#       'rest_framework.authentication.TokenAuthentication',
 #       'rest_framework_simplejwt.authentication.JWTAuthentication',
-    ],
+#    ],
 #    'DEFAULT_THROTTLE_CLASSES': [
  #       'rest_framework.throttling.AnonRateThrottle',
   #      'rest_framework.throttling.UserRateThrottle'
 #    ],
-    'DEFAULT_THROTTLE_RATES': {
-        'anon': '2/day',
-        'user': '3/day',
-        'review-create':'3/day' ,
-        'review-list':'10/day',
-    },
-    'DEFAULT_RENDERER_CLASSES':(
-        'rest_framework.renderers.JSONRenderer',
-    ),
+#    'DEFAULT_THROTTLE_RATES': {
+#        'anon': '2/day',
+ #       'user': '3/day',
+#        'review-create':'3/day' ,
+#        'review-list':'10/day',
+#    },
+#    'DEFAULT_RENDERER_CLASSES':(
+#        'rest_framework.renderers.JSONRenderer',
+#    ),
 }
 
 
