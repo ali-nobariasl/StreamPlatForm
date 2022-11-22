@@ -15,6 +15,7 @@ from watchlist_app.api.serializers import WatchListSerializer,StreamPlatformSeri
 from watchlist_app.api.throttling import ReviewCreateThrottle ,ReviewListThrottle
 from watchlist_app.api.pagination import WatchListPagination
 
+
 @api_view(['GET', 'POST'])
 def movie_list(request):
     if request.method == 'GET':
@@ -26,6 +27,7 @@ def movie_list(request):
         serialize = WatchListSerializer(data= request.data)
         if serialize.is_valid():
             serialize.save()
+            
             return Response(serialize.data)
         else:
             return Response(serialize.errors)

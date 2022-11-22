@@ -26,10 +26,10 @@ urlpatterns = [
     
     path('review/<int:pk>/', Review_detailGv.as_view(), name = 'Review_detail'),
     path('<int:pk>/reviews/', Review_listGv.as_view(), name = 'Review_detail'),
-    path('<int:pk>/review/create', ReviewCreate.as_view(), name = 'Review_detail'),
+    path('<int:pk>/reviews/create', ReviewCreate.as_view(), name = 'Review_detail'),
     
     #path('reviews/<str:username>/', UserReview.as_view(), name = 'user-review-detail'),
-    path('reviews/', UserReview.as_view(), name = 'user-review-detail'),
+    path('user-reviews/', UserReview.as_view(), name = 'user-review-detail'),
 
     path('', include(router.urls)), 
     
